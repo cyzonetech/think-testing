@@ -1,12 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
+// | Test
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006-2015 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2019 http://www.shuipf.com, All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
+// | Author: 水平凡 <admin@abc3210.com>
 // +----------------------------------------------------------------------
 
 namespace think\testing\command;
@@ -16,31 +14,37 @@ use PHPUnit\Util\Blacklist;
 use think\console\Command;
 use think\console\Input;
 use think\console\Output;
-use think\facade\Env;
 use think\facade\Session;
-use think\Loader;
 
 class Test extends Command
 {
+    /**
+     * 配置指令
+     * @return void
+     */
     public function configure()
     {
-        $this->setName('unit')->setDescription('phpunit')->ignoreValidationErrors();
+        $this->setName('unit')
+            ->setDescription('运行单元测试')
+            ->ignoreValidationErrors();
     }
 
-    public function execute(Input $input, Output $output)
+    /**
+     * 执行指令
+     * @param Input $input
+     * @param Output $output
+     * @return int
+     * @throws \ReflectionException
+     */
+    public function handle(Input $input, Output $output)
     {
-        //注册命名空间
-        Loader::addNamespace('tests', Env::get('root_path') . 'tests');
-
         Session::init();
         $argv = $_SERVER['argv'];
         array_shift($argv);
         array_shift($argv);
         array_unshift($argv, 'phpunit');
         Blacklist::$blacklistedClassNames = [];
-
         $code = (new TextUICommand())->run($argv, false);
-
         return $code;
     }
 

@@ -1,36 +1,46 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
+// | AssertionsTrait
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006-2015 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2019 http://www.shuipf.com, All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// | Author: 水平凡 <admin@abc3210.com>
 // +----------------------------------------------------------------------
-// | Author: yunwuxin <448901948@qq.com>
-// +----------------------------------------------------------------------
+
 namespace think\testing;
 
 use PHPUnit\Framework\Assert as PHPUnit;
 use think\facade\Session;
-use think\facade\Url;
 use think\response\View;
 
 trait AssertionsTrait
 {
+    /**
+     * 断言响应状态
+     * @return void
+     */
     public function assertResponseOk()
     {
         $actual = $this->response->getCode();
-
+        //断言是否为真
         PHPUnit::assertTrue(200 == $actual, "Expected status code 200, got {$actual}.");
     }
 
+    /**
+     * 断言响应状态
+     * @param $code
+     */
     public function assertResponseStatus($code)
     {
         $actual = $this->response->getCode();
-
+        //断言属性值是否相等
         PHPUnit::assertEquals($code, $actual, "Expected status code {$code}, got {$actual}.");
     }
 
+    /**
+     * @param $key
+     * @param null $value
+     */
     public function assertViewHas($key, $value = null)
     {
         if (is_array($key)) {
@@ -48,6 +58,9 @@ trait AssertionsTrait
         }
     }
 
+    /**
+     * @param array $bindings
+     */
     public function assertViewHasAll(array $bindings)
     {
         foreach ($bindings as $key => $value) {
@@ -59,6 +72,9 @@ trait AssertionsTrait
         }
     }
 
+    /**
+     * @param $key
+     */
     public function assertViewMissing($key)
     {
         if (!$this->response instanceof View) {
@@ -68,13 +84,19 @@ trait AssertionsTrait
         }
     }
 
+    /**
+     * @param $uri
+     * @param array $params
+     */
     public function assertRedirectedTo($uri, $params = [])
     {
         $this->assertInstanceOf('think\response\Redirect', $this->response);
-
-        PHPUnit::assertEquals(Url::build($uri, $params), $this->response->getTargetUrl());
     }
 
+    /**
+     * @param $key
+     * @param null $value
+     */
     public function assertSessionHas($key, $value = null)
     {
         if (is_array($key)) {
@@ -88,6 +110,9 @@ trait AssertionsTrait
         }
     }
 
+    /**
+     * @param array $bindings
+     */
     public function assertSessionHasAll(array $bindings)
     {
         foreach ($bindings as $key => $value) {

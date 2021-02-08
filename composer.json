@@ -1,26 +1,38 @@
 {
-    "name": "topthink/think-testing",
-    "license": "Apache-2.0",
-    "type": "think-testing",
+    "name": "cyzonetech/think-testing",
+    "description": "单元测试",
     "authors": [
         {
-            "name": "yunwuxin",
-            "email": "448901948@qq.com"
+            "name": "水平凡",
+            "email": "admin@shuipf.com"
         }
     ],
+    "type": "library",
+    "license": "Apache-2.0",
     "require": {
-        "topthink/think-installer": "~2.0",
-	"topthink/framework": "5.1.*",
-        "topthink/think-helper": "~1.0",
-        "phpunit/phpunit": "^6.0",
+        "php": ">=7.1.0",
+        "ext-json": "*",
+        "cyzonetech/framework": "^6.0",
+        "phpunit/phpunit": "^7.0",
         "symfony/dom-crawler": "^2.8.8"
     },
+    "require-dev": {},
     "autoload": {
         "psr-4": {
             "think\\testing\\": "src"
-        },
-        "files": [
-            "src/config.php"
-        ]
+        }
+    },
+    "extra": {
+        "think": {
+            "services": [
+                "think\\testing\\Service"
+            ]
+        }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
     }
 }
